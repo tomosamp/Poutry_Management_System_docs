@@ -17,7 +17,7 @@
 | No | カラム名 | 論理名 | 型 | PK | Not Null | デフォルト | 説明/業務ルール | 備考 |
 |---|---|---|---|---|---|---|---|---|
 | 1 | id | 管理者ID | BIGINT UNSIGNED | ○ | ○ | AUTO INCREMENT | システム採番 |  |
-| 2 | login_id | ログインID | VARCHAR(50) |  | ○ |  | 一意制約 | 英数字想定 |
+| 2 | email | ログインID（メールアドレス） | VARCHAR(255) |  | ○ |  | 一意制約 |  |
 | 3 | password | パスワード | VARCHAR(255) |  | ○ |  | ハッシュ済み値を保存 |  |
 | 4 | last_name | 姓 | VARCHAR(50) |  | ○ |  |  |  |
 | 5 | first_name | 名 | VARCHAR(50) |  | ○ |  |  |  |
@@ -31,7 +31,7 @@
 | 種別 | 名称 | 対象カラム | ユニーク | 用途/目的 | 備考 |
 |---|---|---|---|---|---|
 | 主キー | PRIMARY | id | ○ | レコード一意 |  |
-| ユニーク | admins_login_id_unique | login_id | ○ | ログイン照合 |  |
+| ユニーク | admins_email_unique | email | ○ | ログイン照合 |  |
 
 ## 4. 制約・リレーション
 | 種別 | 名称 | 内容 | 備考 |
