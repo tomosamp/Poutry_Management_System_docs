@@ -20,10 +20,10 @@
 | 3 | region_block_id | 地区ID | BIGINT UNSIGNED |  |  |  | 成鶏はNULL可 |  |
 | 4 | prefecture_id | 都道府県ID | BIGINT UNSIGNED |  | ○ |  | `prefectures.id` |  |
 | 5 | name | 施設名 | VARCHAR(100) |  | ○ |  |  |  |
-| 6 | name_kana | 施設名カナ | VARCHAR(150) |  | ○ |  |  |  |
-| 7 | postal_code | 郵便番号 | VARCHAR(8) |  | ○ |  | `NNN-NNNN` または `NNNNNNN` |  |
-| 8 | city | 市区町村 | VARCHAR(100) |  | ○ |  |  | 画面入力に合わせて分離保持 |
-| 9 | address_line | 番地 | VARCHAR(100) |  | ○ |  |  | 画面入力に合わせて分離保持 |
+| 6 | name_kana | 施設名カナ | VARCHAR(150) |  |  |  | 任意 |  |
+| 7 | postal_code | 郵便番号 | VARCHAR(8) |  |  |  | 任意。`NNN-NNNN` または `NNNNNNN` |  |
+| 8 | city | 市区町村 | VARCHAR(100) |  |  |  | 任意 | 画面入力に合わせて分離保持 |
+| 9 | address_line | 番地 | VARCHAR(100) |  |  |  | 任意 | 画面入力に合わせて分離保持 |
 | 10 | business_type | 事業者種別 | ENUM('company','individual','family') |  |  |  | 企業/個人/家族経営 |  |
 | 11 | closed_at | 廃業日 | DATE |  |  |  |  |  |
 | 12 | merge_or_close_memo | 合併/廃業メモ | TEXT |  |  |  | 任意 |  |

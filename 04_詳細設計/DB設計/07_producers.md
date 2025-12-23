@@ -19,8 +19,8 @@
 | 2 | facility_id | 施設ID | BIGINT UNSIGNED |  | ○ |  | `facilities.id` |  |
 | 3 | last_name | 姓 | VARCHAR(50) |  | ○ |  |  |  |
 | 4 | first_name | 名 | VARCHAR(50) |  | ○ |  |  |  |
-| 5 | last_name_kana | セイ | VARCHAR(50) |  | ○ |  | 全角カナ |  |
-| 6 | first_name_kana | メイ | VARCHAR(50) |  | ○ |  | 全角カナ |  |
+| 5 | last_name_kana | セイ | VARCHAR(50) |  |  |  | 任意（全角カナ） |  |
+| 6 | first_name_kana | メイ | VARCHAR(50) |  |  |  | 任意（全角カナ） |  |
 | 7 | department | 部署名 | VARCHAR(100) |  |  |  | 任意 |  |
 | 8 | email | メールアドレス | VARCHAR(100) |  |  |  |  |  |
 | 9 | phone_number | 電話番号 | VARCHAR(30) |  |  |  |  |  |
