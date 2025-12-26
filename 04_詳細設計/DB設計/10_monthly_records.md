@@ -26,14 +26,14 @@
 | 9 | registered_by_producer_id | 登録生産者ID | BIGINT UNSIGNED |  |  |  | 将来拡張 |  |
 | 10 | input_timestamp | 取込タイムスタンプ | TIMESTAMP(0) |  |  |  | CSVの `MM/DD/YYYY HH:MM:SS` を変換して保存。手入力時はNULL | 最新重複判断に利用 |
 | 11 | source_email_raw | CSVメールアドレス（生） | VARCHAR(255) |  |  |  | CSVで受領した文字列をそのまま保持（正規化しない）。手入力時はNULL。 | 履歴追跡用 |
-| 12 | note_text | 月次メモ | TEXT |  |  |  | 手入力時に職員が入力する「月次メモ（全体メモ）」。空欄はNULLを許容。 | 関係機関向け出力には含めない |
+| 12 | note_text | 月次メモ | TEXT |  |  |  | 手入力時の「月次メモ」に加え、CSVのコメント（備考）も本カラムに保存する。空欄はNULLを許容。 | 関係機関向け出力には含めない |
 | 13 | chick_incoming_count | ひな入雛羽数 | BIGINT |  |  | 0 | 単位は羽（整数）で保持。画面入力も羽（整数）。 | ブロイラーのみ使用 |
 | 14 | live_processed_count | 生体処理羽数 | BIGINT |  |  | 0 | 単位は羽（整数）で保持。画面入力も羽（整数）。 | 全鳥種で使用 |
 | 15 | live_processed_weight_kg | 生体処理重量(kg) | BIGINT |  |  | 0 | 単位はkg（整数）で保持。CSVがkgの場合はそのまま、画面入力がトンの場合は `トン × 1000` で換算する。 | ブロ・地鶏で使用 |
 | 16 | prohibited_count | 禁止羽数 | BIGINT |  |  | 0 | 単位は羽（整数）。 | 全鳥種で使用（先月実績のみ） |
 | 17 | full_disposal_count | 全部廃棄羽数 | BIGINT |  |  | 0 | 単位は羽（整数）。 | 全鳥種で使用（先月実績のみ） |
 | 18 | partial_disposal_count | 一部廃棄羽数 | BIGINT |  |  | 0 | 単位は羽（整数）。 | 全鳥種で使用（先月実績のみ） |
-| 19 | comment_text | コメント | TEXT |  |  |  | CSV提出時の生産者コメント（手入力では未使用/NULL）。 |  |
+| 19 | comment_text | コメント | TEXT |  |  |  | 現行運用では未使用（CSVコメントは `note_text` に保存）。 | 将来拡張用 |
 | 20 | created_at | 作成日時 | TIMESTAMP(0) |  |  | CURRENT_TIMESTAMP |  |  |
 | 21 | updated_at | 更新日時 | TIMESTAMP(0) |  |  | CURRENT_TIMESTAMP | on update |  |
 
@@ -41,7 +41,7 @@
 | 種別 | 名称 | 対象カラム | ユニーク | 用途/目的 | 備考 |
 |---|---|---|---|---|---|
 | 主キー | PRIMARY | id | ○ |  |  |
-| ユニーク | monthly_records_unique | facility_id, bird_species_id, target_month, version_no | ○ | 版管理 |  |
+| ユニーク | monthly_records_unique | facility_id, bird_species_id, target_month, data_kind, version_no | ○ | 版管理（実績/予定を分離） |  |
 | インデックス | monthly_records_month_idx | facility_id, target_month |  | 月次検索 |  |
 | インデックス | monthly_records_species_idx | bird_species_id, target_month |  | 種別検索 |  |
 
