@@ -21,18 +21,19 @@
 | 3 | region_block_id | 地域ブロックID | BIGINT UNSIGNED |  |  |  | `region_blocks.id`。全国はNULL。成鶏は全国のみ。 |  |
 | 4 | target_month | 対象月 | DATE |  | ○ |  | 月初(YYYY-MM-01) |  |
 | 5 | data_kind | データ区分 | ENUM('actual','plan') |  | ○ |  | 実績/予定 |  |
-| 6 | metric_key | 項目キー | VARCHAR(100) |  | ○ |  | `chick_incoming_count` / `live_processed_count` / `live_processed_weight_kg` / `prohibited_count` / `full_disposal_count` / `partial_disposal_count` |  |
-| 7 | value_integer | 集計値 | BIGINT |  | ○ | 0 | 単位は羽・kgのまま保持する。 |  |
-| 8 | aggregate_version_no | 集計版番号 | INT UNSIGNED |  | ○ | 1 | 変更がある場合のみ +1 |  |
-| 9 | source_updated_at_max | 元データ最終更新 | TIMESTAMP(0) |  |  |  | `monthly_records.updated_at` / `monthly_record_change_logs.changed_at` の最大値 |  |
-| 10 | calculated_at | 集計日時 | TIMESTAMP(0) |  | ○ | CURRENT_TIMESTAMP | 再集計実行時刻 |  |
+| 6 | data_source | データソース | VARCHAR(30) |  | ○ | system | `system`（システム集計） / `external`（外部協会値） |  |
+| 7 | metric_key | 項目キー | VARCHAR(100) |  | ○ |  | `chick_incoming_count` / `live_processed_count` / `live_processed_weight_kg` / `prohibited_count` / `full_disposal_count` / `partial_disposal_count` |  |
+| 8 | value_integer | 集計値 | BIGINT |  | ○ | 0 | 単位は羽・kgのまま保持する。 |  |
+| 9 | aggregate_version_no | 集計版番号 | INT UNSIGNED |  | ○ | 1 | 変更がある場合のみ +1 |  |
+| 10 | source_updated_at_max | 元データ最終更新 | TIMESTAMP(0) |  |  |  | `monthly_records.updated_at` / `monthly_record_change_logs.changed_at` の最大値 |  |
+| 11 | calculated_at | 集計日時 | TIMESTAMP(0) |  | ○ | CURRENT_TIMESTAMP | 再集計実行時刻 |  |
 
 ## 3. インデックス・キー設計
 | 種別 | 名称 | 対象カラム | ユニーク | 用途/目的 | 備考 |
 |---|---|---|---|---|---|
 | 主キー | PRIMARY | id | ○ |  |  |
-| ユニーク | monthly_aggregate_values_unique | bird_species_id, region_block_id, target_month, data_kind, metric_key, aggregate_version_no | ○ | 版管理 | region_block_idはNULL許容 |
-| インデックス | monthly_aggregate_values_latest_idx | bird_species_id, region_block_id, target_month, data_kind, metric_key |  | 最新版検索 |  |
+| ユニーク | monthly_aggregate_values_unique | bird_species_id, region_block_id, target_month, data_kind, data_source, metric_key, aggregate_version_no | ○ | 版管理 | region_block_idはNULL許容 |
+| インデックス | monthly_aggregate_values_latest_idx | bird_species_id, region_block_id, target_month, data_kind, data_source, metric_key |  | 最新版検索 |  |
 
 ## 4. 制約・リレーション
 | 種別 | 名称 | 内容 | 備考 |
@@ -44,3 +45,4 @@
 | 改定日 | 版数 | 変更概要 | 担当 |
 |---|---|---|---|
 | 2025-12-24 | v0.1 | 初版作成 | Codex |
+| 2026-01-06 | v0.2 | data_source追加（外部協会値の管理） | Codex |

@@ -5,6 +5,7 @@
 - 関係機関提出時のスナップショットを版管理し、再提出時も過去値を残す。
 - 月次/年次の違いは `period_type` で表現し、年次出力も「1回の出力＝1スナップショット」として扱う。
 - 出力元は `monthly_aggregate_values` の最新集計値を前提とする。
+- ALICブロイラーの外部協会値は `payload_json` に含めて保存する。
 
 ## 1. 基本情報
 | 項目 | 内容 | 備考 |
@@ -26,7 +27,7 @@
 | 7 | export_version_no | 提出版 | INT UNSIGNED |  | ○ | 1 | 再出力ごとに+1 |  |
 | 8 | source_record_id | 元レコードID | BIGINT UNSIGNED |  |  |  | 元データ参照（任意） | 年次出力や集計出力ではNULL |
 | 9 | source_record_version_no | 元版番号 | INT UNSIGNED |  |  |  | 差分ハイライト用（任意） | 年次出力や集計出力ではNULL |
-| 10 | payload_json | 提出データJSON | JSON |  | ○ |  | 出力時の値スナップショット（年次は12ヶ月分の系列/提出月/ハイライト対象月を含む） |  |
+| 10 | payload_json | 提出データJSON | JSON |  | ○ |  | 出力時の値スナップショット（年次は12ヶ月分の系列/提出月/ハイライト対象月を含む）。外部協会値は `external` キーに保持する。 |  |
 | 11 | exported_at | 出力日時 | TIMESTAMP(0) |  | ○ | CURRENT_TIMESTAMP |  |  |
 | 12 | exported_by_admin_id | 出力管理者ID | BIGINT UNSIGNED |  | ○ |  | `admins.id` |  |
 
@@ -49,3 +50,4 @@
 | 改定日 | 版数 | 変更概要 | 担当 |
 |---|---|---|---|
 | 2025-12-11 | v0.1 | 初版作成 | Codex |
+| 2026-01-06 | v0.2 | ALIC外部協会値のpayload保持を追記 | Codex |
